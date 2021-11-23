@@ -13,9 +13,6 @@ public class PlayerController : MonoBehaviour
     //0= left; 1 = middle, 2 = right
     private int roadNum = 1;
     public float roadDistance = 2.5f; //dsitance between two roads
-
-    private float swipeSpeed = 80f;
-    private float jumpForce = 10;
     private float gravity = -20;
 
 
@@ -24,6 +21,11 @@ public class PlayerController : MonoBehaviour
         GetComponents();
     }
 
+    // get all components we need 
+    private void GetComponents()
+    {
+        controller = GetComponent<CharacterController>();
+    }
 
     private void Update()
     {
@@ -31,24 +33,10 @@ public class PlayerController : MonoBehaviour
         direction.y += gravity * Time.deltaTime;
         ChangeRoad();
 
-        if (SwipeManager.swipeUp && controller.isGrounded == true)
-        {
-            Jump();
-        }
-
-    }
-
-    private void FixedUpdate()
-    {
         controller.Move(direction * Time.deltaTime); // moove player in good direction
     }
 
-    private void Jump()
-    {
-        direction.y = jumpForce;
-    }
-
-    //get inputs on which lan we should be
+    //get inputs on which road we should be
     private void ChangeRoad()
     {
         if (SwipeManager.swipeRight)
@@ -71,6 +59,8 @@ public class PlayerController : MonoBehaviour
         RightLeftMovements();
     }
 
+
+    //change player's position
     private void RightLeftMovements()
     {
         //calcul the targetposition for player
@@ -84,8 +74,6 @@ public class PlayerController : MonoBehaviour
             targetposition += Vector3.right * roadDistance;
 
         }
-        //  transform.position = targetposition;
-        //  transform.position = Vector3.Lerp(transform.position, targetposition, 75 * Time.deltaTime);//doesn't work IDK why
 
         if (transform.position == targetposition) return;
 
@@ -104,19 +92,17 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    //loose game when player enter on collision with something 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+    
         if (hit.transform.tag == "Obstacle")
         {
-        //    GameManager.gameOver = true;
+            GameManager.gameOver = true;
         }
     }
 
 
-    // get all components we need 
-    private void GetComponents()
-    {
-        controller = GetComponent<CharacterController>();
-    }
+
 
 }

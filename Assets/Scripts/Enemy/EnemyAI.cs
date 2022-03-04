@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    private float movementSpeed = 10f;
+    private float movementSpeed = 5f;
     private Rigidbody enemyRb;
     private GameObject player;
     private float reactDistance = 30f;

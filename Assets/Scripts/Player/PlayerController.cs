@@ -29,12 +29,23 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        direction.z = forwardSpeed; //add good speed
-        direction.y += gravity * Time.deltaTime;
+        InitSpeedOnPlayer();
+        AddGravityOnPlayer();
         ChangeRoad();
 
         controller.Move(direction * Time.deltaTime); // moove player in good direction
     }
+
+    private void InitSpeedOnPlayer()
+    {
+        direction.z = forwardSpeed; //add good speed
+    }
+
+    private void AddGravityOnPlayer()
+    {
+        direction.y += gravity * Time.deltaTime;
+    }
+
 
     //get inputs on which road we should be
     private void ChangeRoad()
